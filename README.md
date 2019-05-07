@@ -10,7 +10,7 @@ This is the project that is developed for the solution of the test as fullstack 
 >
 >Database: SQLite3
 
-##Install it
+## Install it
 
 Clone the [github repository](https://github.com/DIXMA/rocka_test.git): 
 
@@ -19,7 +19,7 @@ git clone https://github.com/DIXMA/rocka_test.git
 ```
 
 Create the virtual environment with python 3.7 or greater than 3.6:
-> ####Note: 
+> #### Note: 
 > I use virtualenvwrapper but if it is your preference you can use virtualenv normally.
 ```
 mkvirtualenv --python=python3 rocka_test
@@ -68,7 +68,7 @@ Start the server:
 
 Normally the server must be loaded in port 8000, you can enter the navigator with the url: http://127.0.0.1:8000/
 
-##Description of the development
+## Description of the development
 > To solve the problem of data loading of the file, first make a prerogative verifying that it has not been before. If the preload has not been performed, it starts reading the json file and uploading the data in the models and then saving it in the database. This process is done only once, and it is taken into account that data is not repeated.
 > 
 > For the design of the models, create a relationship entity structure, taking advantage of Django's ManToMay property, to model relations of this type.
