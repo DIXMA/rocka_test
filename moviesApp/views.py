@@ -24,7 +24,8 @@ def getMostPopularMovies(request):
     :return: Render view whit movies data
     @author: Diego Cortés <ingdiego.corts65@gmail.com>
     """
-    movies = Movie.objects.all().order_by('-imdbRating')  # Find movies order most popular
+    movies = Movie.objects.all().order_by(
+        '-imdbRating')  # Find movies order most popular
     return render(request, 'movies.html', {'movies_all': movies})
 
 
@@ -39,7 +40,8 @@ def getMovieDetails(request, movieId):
     from django.db.models import Q
     movie = Movie.objects.filter(id=movieId).first()  # Find a movie by ID
     similarMovies = Movie.objects.filter(
-        Q(genre__in=movie.genre.all()) | Q(actor__in=movie.actor.all()) & Q(imdbRating=movie.imdbRating)
+        Q(genre__in=movie.genre.all()) | Q(actor__in=movie.actor.all()) & Q(
+            imdbRating=movie.imdbRating)
     ).exclude(id=movie.id).distinct().all()
     return render(request, 'details.html', {
         'movie': movie,
@@ -55,8 +57,27 @@ def getMoviesByActor(request, actorName):
     :return: Render view whit a movie data
     @author: Diego Cortés <ingdiego.corts65@gmail.com>
     """
-    movies = Movie.objects.filter(actor__name=actorName).all()  # Find movies by actor
+    movies = Movie.objects.filter(
+        actor__name=actorName).all()  # Find movies by actor
     return render(request, 'movies.html', {'movies_all': movies})
+
+
+def getPlaylistByActor(request, actorName, position):
+    """
+    Get playlist by actor
+    :param request: petition
+    :param actorName: Name Actor movie for search
+    :param position: Position to actual movie
+    :return: Render view whit a movie data
+    @author: Diego Cortés <ingdiego.corts65@gmail.com>
+    """
+    movies = Movie.objects.filter(
+        actor__name=actorName).all()  # Find movies by actor
+    actual_movie = movies[position]
+    return render(request, 'playList.html',
+                  {'movies_all': movies, 'movie': actual_movie,
+                   'position': position, 'actorName': actorName}
+                  )
 
 
 def getMoviesByGenre(request, genreName):
@@ -67,8 +88,26 @@ def getMoviesByGenre(request, genreName):
     :return: Render view whit a movie data
     @author: Diego Cortés <ingdiego.corts65@gmail.com>
     """
-    movies = Movie.objects.filter(genre__name=genreName).all()  # Find movies by genre
+    movies = Movie.objects.filter(
+        genre__name=genreName).all()  # Find movies by genre
     return render(request, 'movies.html', {'movies_all': movies})
+
+
+def getPlaylistByGenre(request, genreName, position):
+    """
+    Get playlist by genre
+    :param request: petition
+    :param genreName: Name Genre movie for search
+    :return: Render view whit a movie data
+    @author: Diego Cortés <ingdiego.corts65@gmail.com>
+    """
+    movies = Movie.objects.filter(
+        genre__name=genreName).all()  # Find movies by genre
+    actual_movie = movies[position]
+    return render(request, 'playListGenre.html',
+                  {'movies_all': movies, 'movie': actual_movie,
+                   'position': position, 'actorName': genreName}
+                  )
 
 
 def __initMovies():
@@ -81,14 +120,18 @@ def __initMovies():
     if movies:  # Verify if exists movies in the database
         return movies
     else:  # There are no movies in the database then they are loaded from the json file
-        json_data = os.path.join(BASE_DIR, 'static', "movies.json")  # File directory
+        json_data = os.path.join(BASE_DIR, 'static',
+                                 "movies.json")  # File directory
         with open(json_data) as file:  # Open json file to read data
             data = json.load(file)  # Read data file
 
             for movie in data:
-                genres = __getGenres(movie.get('genres', []))  # Generate list of genres objects
-                actors = __getActors(movie.get('actors', []))  # Generate list of actors objects
-                ratings = __getRatings(movie.get('ratings', []))  # Generate list of ratings objects
+                genres = __getGenres(
+                    movie.get('genres', []))  # Generate list of genres objects
+                actors = __getActors(
+                    movie.get('actors', []))  # Generate list of actors objects
+                ratings = __getRatings(movie.get('ratings',
+                                                 []))  # Generate list of ratings objects
 
                 # Search for the existence of a movie by title and year
                 movie_aux = \
@@ -108,7 +151,8 @@ def __initMovies():
                         averageRating=movie.get('averageRating', 0),
                         originalTitle=movie.get('originalTitle', ''),
                         storyline=movie.get('storyline', ''),
-                        imdbRating=0.0 if type(imdbRating) == str else imdbRating,
+                        imdbRating=0.0 if type(
+                            imdbRating) == str else imdbRating,
                         posterurl=movie.get('posterurl', '')
                     )
                     movie.save()

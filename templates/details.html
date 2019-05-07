@@ -25,20 +25,13 @@
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="/movies/mostPopular/">Most popular
-                    <span
-                            class="sr-only"></span></a>
+                    <span lass="sr-only"></span></a>
             </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search"
-                   placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-                Search
-            </button>
-        </form>
     </div>
 </nav>
 <div class="container">
+    <h1>Movie Details:</h1>
     <div class="card mb-12">
         <div class="row no-gutters">
             <div class="col-md-4">
@@ -46,11 +39,8 @@
             </div>
             <div class="col-md-8">
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a wider card with
-                        supporting text below as a natural lead-in to
-                        additional content. This content is a little bit
-                        longer.</p>
+                    <h5 class="card-title">{{ movie.title }}</h5>
+                    <p class="card-text">{{ movie.storyline }}</p>
                     <p class="card-text">
                         <small class="text-muted">
                             <b>Rating:</b> {{ movie.imdbRating }}
@@ -58,15 +48,17 @@
                         <br/>
                         <small class="text-muted"><b>Actors:</b>
                             {% for actor in movie.actor.all %}
-                                <a href="/movies/by/actor/{{ actor.name }}/">{{ actor.name }}</a>
-                                ,
+                                <a href="/movies/playlist/actor/{{ actor.name }}/0/"
+                                   data-toggle="tooltip" data-placement="top"
+                                   title="PlayList by Actor {{ actor.name }}">{{ actor.name }}</a>,
                             {% endfor %}
                         </small>
                         <br/>
                         <small class="text-muted"><b>Genres:</b>
                             {% for genre in movie.genre.all %}
-                                <a href="/movies/by/genre/{{ genre.name }}/">{{ genre.name }}</a>
-                                ,
+                                <a href="/movies/playlist/genre/{{ genre.name }}/0/"
+                                   data-toggle="tooltip" data-placement="top"
+                                   title="PlayList by Genre {{ genre.name }}">{{ genre.name }}</a>,
                             {% endfor %}
                         </small>
                     </p>
