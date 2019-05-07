@@ -69,6 +69,14 @@ Start the server:
 Normally the server must be loaded in port 8000, you can enter the navigator with the url: http://127.0.0.1:8000/
 
 ##Description of the development
+> To solve the problem of data loading of the file, first make a prerogative verifying that it has not been before. If the preload has not been performed, it starts reading the json file and uploading the data in the models and then saving it in the database. This process is done only once, and it is taken into account that data is not repeated.
+> 
+> For the design of the models, create a relationship entity structure, taking advantage of Django's ManToMay property, to model relations of this type.
 >
+> You can check all the movies that are registered.
 >
+> You can check the movies by genre, clicking on a desired genre in the list of movies.
 >
+> You can check the films by actor, clicking on the name of the actor in the list of films.
+>
+> You can see details of a movie by clicking on the button More details of the movie. In the detail of the film you can see similar movies, which contain similar genres, similar actors and the rating.
