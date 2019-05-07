@@ -95,21 +95,13 @@
                                     <br/>
                                     <small class="text-muted"><b>Actors:</b>
                                         {% for actor in movie.actor.all %}
-                                            <a href="/movies/playlist/actor/{{ actor.name }}/0/"
-                                               data-toggle="tooltip"
-                                               data-placement="top"
-                                               title="PlayList by Actor {{ actor.name }}">{{ actor.name }}</a>
-                                            ,
+                                            {{ actor.name }},
                                         {% endfor %}
                                     </small>
                                     <br/>
                                     <small class="text-muted"><b>Genres:</b>
                                         {% for genre in movie.genre.all %}
-                                            <a href="/movies/playlist/genre/{{ genre.name }}/"
-                                               data-toggle="tooltip"
-                                               data-placement="top"
-                                               title="PlayList by Genre {{ genre.name }}">{{ genre.name }}</a>
-                                            ,
+                                            {{ genre.name }},
                                         {% endfor %}
                                     </small>
                                 </p>
