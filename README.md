@@ -80,3 +80,7 @@ Normally the server must be loaded in port 8000, you can enter the navigator wit
 > You can check the films by actor, clicking on the name of the actor in the list of films.
 >
 > You can see details of a movie by clicking on the button More details of the movie. In the detail of the film you can see similar movies, which contain similar genres, similar actors and the rating.
+>
+> I did not go into detail in the handling of exceptions for the time it took me to develop the solution. But I keep them in mind whenever I develop.
+>
+> Although in the preba text I said that third-party frameworks were not used, I took the audacity to use bootstrap to support the design and fully dedicate the effort in the development of the solution.
