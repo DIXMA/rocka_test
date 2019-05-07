@@ -13,8 +13,11 @@ def getAllMovies(request):
     :return: Render view whit movies data
     @author: Diego Cortés <ingdiego.corts65@gmail.com>
     """
-    movies = __initMovies()  # Initialize movies store
-    return render(request, 'movies.html', {'movies_all': movies})
+    try:
+        movies = __initMovies()  # Initialize movies store
+        return render(request, 'movies.html', {'movies_all': movies})
+    except Exception as e:
+        print(e)
 
 
 def getMostPopularMovies(request):
@@ -24,9 +27,12 @@ def getMostPopularMovies(request):
     :return: Render view whit movies data
     @author: Diego Cortés <ingdiego.corts65@gmail.com>
     """
-    movies = Movie.objects.all().order_by(
-        '-imdbRating')  # Find movies order most popular
-    return render(request, 'movies.html', {'movies_all': movies})
+    try:
+        movies = Movie.objects.all().order_by(
+            '-imdbRating')  # Find movies order most popular
+        return render(request, 'movies.html', {'movies_all': movies})
+    except Exception as e:
+        print(e)
 
 
 def getMovieDetails(request, movieId):
@@ -37,16 +43,19 @@ def getMovieDetails(request, movieId):
     :return: Render view whit a movie data
     @author: Diego Cortés <ingdiego.corts65@gmail.com>
     """
-    from django.db.models import Q
-    movie = Movie.objects.filter(id=movieId).first()  # Find a movie by ID
-    similarMovies = Movie.objects.filter(
-        Q(genre__in=movie.genre.all()) | Q(actor__in=movie.actor.all()) & Q(
-            imdbRating=movie.imdbRating)
-    ).exclude(id=movie.id).distinct().all()
-    return render(request, 'details.html', {
-        'movie': movie,
-        'similarMovies': similarMovies
-    })
+    try:
+        from django.db.models import Q
+        movie = Movie.objects.filter(id=movieId).first()  # Find a movie by ID
+        similarMovies = Movie.objects.filter(
+            Q(genre__in=movie.genre.all()) | Q(actor__in=movie.actor.all()) & Q(
+                imdbRating=movie.imdbRating)
+        ).exclude(id=movie.id).distinct().all()
+        return render(request, 'details.html', {
+            'movie': movie,
+            'similarMovies': similarMovies
+        })
+    except Exception as e:
+        print(e)
 
 
 def getMoviesByActor(request, actorName):
@@ -57,9 +66,12 @@ def getMoviesByActor(request, actorName):
     :return: Render view whit a movie data
     @author: Diego Cortés <ingdiego.corts65@gmail.com>
     """
-    movies = Movie.objects.filter(
-        actor__name=actorName).all()  # Find movies by actor
-    return render(request, 'movies.html', {'movies_all': movies})
+    try:
+        movies = Movie.objects.filter(
+            actor__name=actorName).all()  # Find movies by actor
+        return render(request, 'movies.html', {'movies_all': movies})
+    except Exception as e:
+        print(e)
 
 
 def getPlaylistByActor(request, actorName, position):
@@ -71,13 +83,16 @@ def getPlaylistByActor(request, actorName, position):
     :return: Render view whit a movie data
     @author: Diego Cortés <ingdiego.corts65@gmail.com>
     """
-    movies = Movie.objects.filter(
-        actor__name=actorName).all()  # Find movies by actor
-    actual_movie = movies[position]
-    return render(request, 'playList.html',
-                  {'movies_all': movies, 'movie': actual_movie,
-                   'position': position, 'actorName': actorName}
-                  )
+    try:
+        movies = Movie.objects.filter(
+            actor__name=actorName).all()  # Find movies by actor
+        actual_movie = movies[position]
+        return render(request, 'playList.html',
+                      {'movies_all': movies, 'movie': actual_movie,
+                       'position': position, 'actorName': actorName}
+                      )
+    except Exception as e:
+        print(e)
 
 
 def getMoviesByGenre(request, genreName):
@@ -88,9 +103,12 @@ def getMoviesByGenre(request, genreName):
     :return: Render view whit a movie data
     @author: Diego Cortés <ingdiego.corts65@gmail.com>
     """
-    movies = Movie.objects.filter(
-        genre__name=genreName).all()  # Find movies by genre
-    return render(request, 'movies.html', {'movies_all': movies})
+    try:
+        movies = Movie.objects.filter(
+            genre__name=genreName).all()  # Find movies by genre
+        return render(request, 'movies.html', {'movies_all': movies})
+    except Exception as e:
+        print(e)
 
 
 def getPlaylistByGenre(request, genreName, position):
@@ -101,13 +119,16 @@ def getPlaylistByGenre(request, genreName, position):
     :return: Render view whit a movie data
     @author: Diego Cortés <ingdiego.corts65@gmail.com>
     """
-    movies = Movie.objects.filter(
-        genre__name=genreName).all()  # Find movies by genre
-    actual_movie = movies[position]
-    return render(request, 'playListGenre.html',
-                  {'movies_all': movies, 'movie': actual_movie,
-                   'position': position, 'actorName': genreName}
-                  )
+    try:
+        movies = Movie.objects.filter(
+            genre__name=genreName).all()  # Find movies by genre
+        actual_movie = movies[position]
+        return render(request, 'playListGenre.html',
+                      {'movies_all': movies, 'movie': actual_movie,
+                       'position': position, 'actorName': genreName}
+                      )
+    except Exception as e:
+        print(e)
 
 
 def __initMovies():
